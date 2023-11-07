@@ -39,23 +39,37 @@ function refreshTable() {
                         </div>
                         <div
                             class="task-table-data task-table-status text-center">
-                            <button class="btn btn-danger">Active</button>
+                            <button 
+                                data-button="status" 
+                                data-status-id="${e.id}" 
+                                class="btn btn-danger">
+                                Active
+                                </button>
                         </div>
                         <div
                             class="task-table-data task-table-action text-center">
-                            <button data-id="${e.id}" data-button="delete" class="btn btn-danger-outline">
+                            <button 
+                                data-delete-id="${e.id}" 
+                                data-button="delete" 
+                                class="btn btn-danger-outline">
                                 Delete
                             </button>
                         </div>`
     })
     addListnersToDeleteButtons()
+    addListnersToStatusButtons()
 }
 
-// finds and removes thhe object with a specific id
-function removeObjectWithId(arr, id) {
-    const objWithIdIndex = arr.findIndex(function (obj) {
+// finds an object with an id
+function findObjectIndexWithId(arr, id) {
+    return arr.findIndex(function (obj) {
         return obj.id == id
     })
+}
+
+// removes thhe object with a specific id
+function removeObjectWithId(arr, id) {
+    const objWithIdIndex = findObjectIndexWithId(arr, id)
     arr.splice(objWithIdIndex, 1)
     return arr
 }
@@ -65,10 +79,38 @@ function addListnersToDeleteButtons() {
     let buttons = document.querySelectorAll('[data-button="delete"]')
     buttons.forEach(function (btn) {
         btn.addEventListener("click", function (e) {
-            let id = e.target.getAttribute("data-id")
+            let id = e.target.getAttribute("data-delete-id")
             let table_row = document.querySelector(`[data-row-id="${id}"]`)
             removeObjectWithId(TASKS, id)
             table_row.remove()
+        })
+    })
+}
+
+// remove and add elements from array
+function addAndRemove(element, add, remove) {
+    element.remove(remove)
+    element.add(add)
+}
+
+// adds event listners to all the status buttons
+function addListnersToStatusButtons() {
+    let buttons = document.querySelectorAll('[data-button="status"]')
+    buttons.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            let id = e.target.getAttribute("data-status-id")
+            let current_obj_index = findObjectIndexWithId(TASKS, id)
+            console.log(id, current_obj_index)
+            if (e.target.classList.contains("btn-danger")) {
+                addAndRemove(e.target.classList, "btn-confirm", "btn-danger")
+                e.target.innerHTML = "Completed"
+                TASKS[current_obj_index].status = "completed"
+            } else {
+                addAndRemove(e.target.classList, "btn-danger", "btn-confirm")
+                e.target.innerHTML = "Active"
+                TASKS[current_obj_index].status = "active"
+            }
+            console.log(TASKS[current_obj_index].status)
         })
     })
 }
