@@ -37,4 +37,37 @@ main {
 .task-input:focus {
     outline: none;
 }
+
+.task-table {
+    margin-block: 2rem;
+}
+.task-table-row {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+}
+.task-table-head {
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    background-color: var(--secondary-color);
+}
+.task-table-data {
+    height: 100%;
+}
+.task-table-data:not(:first-child) {
+    border-left: 1px solid #fff;
+}
+.task-table-number {
+    flex-basis: 5%;
+}
+.task-table-name {
+    flex-basis: 75%;
+    padding-left: 20px;
+}
+.task-table-status {
+    flex-basis: 10%;
+}
+.task-table-action {
+    flex-basis: 10%;
+}
 /* main end */

@@ -38,3 +38,6 @@ img {
     border: 0;
     outline: 1px solid var(--primary-color);
 }
+.text-center {
+    text-align: center;
+}
