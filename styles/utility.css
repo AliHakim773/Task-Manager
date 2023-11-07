@@ -21,3 +21,20 @@ img {
     background-color: #eee;
     font-family: "Roboto", sans-serif;
 }
+.btn {
+    height: 30px;
+    padding-inline: 10px;
+}
+.btn-primary {
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 5px;
+}
+.btn-primary:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: 0;
+    outline: 1px solid var(--primary-color);
+}

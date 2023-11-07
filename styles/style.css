@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #2193b0;
+    --secondary-color: #6dd5ed;
+}
+
 /* header  start */
 header {
     width: 100%;
@@ -6,10 +11,30 @@ header {
     color: #eee;
     font-size: 24px;
     font-family: "Edu TAS Beginner", cursive;
-    background-image: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+    background-image: linear-gradient(
+        90deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
 }
 /* header  end */
 
 /* main start */
-
+main {
+    margin-top: 75px;
+    padding-inline: 5rem;
+}
+.task-actions {
+    width: 100%;
+    padding-inline: 2rem;
+}
+.task-input {
+    height: 30px;
+    padding-inline: 5px;
+    border-radius: 3px;
+    border: 1px solid var(--primary-color);
+}
+.task-input:focus {
+    outline: none;
+}
 /* main end */
