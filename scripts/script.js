@@ -34,8 +34,13 @@ function refreshTable() {
                             class="task-table-data task-table-number text-center">
                             ${e.id}
                         </div>
-                        <div class="task-table-data task-table-name">
-                            ${e.value}
+                        <div
+                            class="task-table-data task-table-name">
+                            <input
+                                data-name-id=${e.id}
+                                type="text"
+                                class="task-table-name-input"
+                                value="${e.value}" />
                         </div>
                         <div
                             class="task-table-data task-table-status text-center">
@@ -58,6 +63,7 @@ function refreshTable() {
     })
     addListnersToDeleteButtons()
     addListnersToStatusButtons()
+    addEventListnerToChangeNames()
 }
 
 // finds an object with an id
@@ -100,7 +106,6 @@ function addListnersToStatusButtons() {
         btn.addEventListener("click", function (e) {
             let id = e.target.getAttribute("data-status-id")
             let current_obj_index = findObjectIndexWithId(TASKS, id)
-            console.log(id, current_obj_index)
             if (e.target.classList.contains("btn-danger")) {
                 addAndRemove(e.target.classList, "btn-confirm", "btn-danger")
                 e.target.innerHTML = "Completed"
@@ -110,7 +115,20 @@ function addListnersToStatusButtons() {
                 e.target.innerHTML = "Active"
                 TASKS[current_obj_index].status = "active"
             }
-            console.log(TASKS[current_obj_index].status)
+        })
+    })
+}
+
+// adds event listners to all the name inputs
+function addEventListnerToChangeNames() {
+    let names = document.querySelectorAll(".task-table-name-input")
+    console.log(names)
+    names.forEach(function (n) {
+        n.addEventListener("change", function (e) {
+            let id = e.target.getAttribute("data-name-id")
+            console.log(id)
+            let current_obj_index = findObjectIndexWithId(TASKS, id)
+            TASKS[current_obj_index].value = e.target.value
         })
     })
 }

@@ -37,9 +37,6 @@ main {
     border-radius: 3px;
     border: 1px solid var(--primary-color);
 }
-.task-input:focus {
-    outline: none;
-}
 .task-input-label {
     position: absolute;
     font-size: 12px;
@@ -101,5 +98,10 @@ main {
 }
 .task-table-action {
     flex-basis: 10%;
+}
+.task-table-name-input {
+    width: 100%;
+    padding-right: 2rem;
+    font-size: 16px;
 }
 /* main end */
