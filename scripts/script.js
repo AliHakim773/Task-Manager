@@ -33,31 +33,31 @@ function refreshTable() {
                         <div
                             class="task-table-data task-table-number text-center">
                             ${e.id}
-                        </div>
+                            </div>
                         <div
                             class="task-table-data task-table-name">
                             <input
-                                data-name-id=${e.id}
-                                type="text"
-                                class="task-table-name-input"
-                                value="${e.value}" />
-                        </div>
-                        <div
+                            data-name-id=${e.id}
+                            type="text"
+                            class="task-table-name-input"
+                            value="${e.value}" />
+                            </div>
+                            <div
                             class="task-table-data task-table-status text-center">
                             <button 
-                                data-button="status" 
-                                data-status-id="${e.id}" 
-                                class="btn btn-danger">
-                                Active
+                            data-button="status" 
+                            data-status-id="${e.id}" 
+                            class="btn btn-danger">
+                            Active
                                 </button>
                         </div>
                         <div
                             class="task-table-data task-table-action text-center">
                             <button 
-                                data-delete-id="${e.id}" 
-                                data-button="delete" 
-                                class="btn btn-danger-outline">
-                                Delete
+                            data-delete-id="${e.id}" 
+                            data-button="delete" 
+                            class="btn btn-danger-outline">
+                            Delete
                             </button>
                         </div>`
     })
@@ -89,6 +89,12 @@ function addListnersToDeleteButtons() {
             let table_row = document.querySelector(`[data-row-id="${id}"]`)
             removeObjectWithId(TASKS, id)
             table_row.remove()
+            if (TASKS.length == 0) {
+                task_table.innerHTML += `
+                    <div class="task-table-row task-empty">
+                        You have no Tasks
+                    </div>`
+            }
         })
     })
 }
