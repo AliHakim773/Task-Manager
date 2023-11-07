@@ -29,6 +29,7 @@ main {
 .task-actions {
     width: 100%;
     padding-inline: 2rem;
+    position: relative;
 }
 .task-input {
     height: 30px;
@@ -39,7 +40,16 @@ main {
 .task-input:focus {
     outline: none;
 }
-
+.task-input-label {
+    position: absolute;
+    font-size: 12px;
+    color: var(--color-red);
+    top: -10%;
+    left: 10;
+    transform: translateY(-100%);
+    animation-name: horizontal-shaking;
+    animation-duration: 0.5s;
+}
 .task-table {
     margin-block: 2rem;
 }

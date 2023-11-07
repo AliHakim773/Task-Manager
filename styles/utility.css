@@ -66,3 +66,42 @@ img {
 .text-center {
     text-align: center;
 }
+.d-none {
+    display: none;
+}
+
+@keyframes horizontal-shaking {
+    0% {
+        transform: translateX(0) translateY(-100%);
+    }
+    10% {
+        transform: translateX(5px) translateY(-100%);
+    }
+    20% {
+        transform: translateX(-5px) translateY(-100%);
+    }
+    30% {
+        transform: translateX(5px) translateY(-100%);
+    }
+    40% {
+        transform: translateX(-5px) translateY(-100%);
+    }
+    50% {
+        transform: translateX(5px) translateY(-100%);
+    }
+    60% {
+        transform: translateX(-5px) translateY(-100%);
+    }
+    70% {
+        transform: translateX(5px) translateY(-100%);
+    }
+    80% {
+        transform: translateX(-5px) translateY(-100%);
+    }
+    90% {
+        transform: translateX(5px) translateY(-100%);
+    }
+    100% {
+        transform: translateX(0) translateY(-100%);
+    }
+}

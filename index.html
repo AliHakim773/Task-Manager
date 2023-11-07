@@ -18,8 +18,17 @@
             <!-- main start -->
             <main>
                 <div class="task-actions">
-                    <input class="task-input" type="text" />
-                    <button class="btn btn-primary-outline">Add Task</button>
+                    <label for="task-input" class="task-input-label d-none"
+                        >You Need To Enter A Task</label
+                    >
+                    <input
+                        name="task-input"
+                        class="task-input"
+                        type="text"
+                        placeholder="Enter Your Task" />
+                    <button id="add-task-btn" class="btn btn-primary-outline">
+                        Add Task
+                    </button>
                 </div>
                 <section class="task-table">
                     <div class="task-table-row task-table-head">
