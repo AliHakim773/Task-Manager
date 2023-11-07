@@ -1,0 +1,9 @@
+.header {
+    width: 100%;
+    padding-block: 10px;
+    text-align: center;
+    color: #eee;
+    font-size: 24px;
+    font-family: "Edu TAS Beginner", cursive;
+    background-image: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+}

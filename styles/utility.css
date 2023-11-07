@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner&display=swap");
+
 *,
 *::after,
 *::before {
@@ -15,4 +18,6 @@ img {
     width: 100vw;
     height: 100vh;
     overflow-y: scroll;
+    background-color: #eee;
+    font-family: "Roboto", sans-serif;
 }
