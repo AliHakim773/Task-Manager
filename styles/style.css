@@ -1,4 +1,5 @@
-.header {
+/* header  start */
+header {
     width: 100%;
     padding-block: 10px;
     text-align: center;
@@ -7,3 +8,8 @@
     font-family: "Edu TAS Beginner", cursive;
     background-image: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
 }
+/* header  end */
+
+/* main start */
+
+/* main end */

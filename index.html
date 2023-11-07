@@ -9,9 +9,40 @@
     </head>
     <body>
         <div class="page">
-            <header class="header">
+            <!-- header start -->
+            <header>
                 <h1>My Task Manager</h1>
             </header>
+            <!-- header end -->
+
+            <!-- main start -->
+            <main>
+                <div class="task-actions">
+                    <input class="input-task" type="text" />
+                    <button class="add-task-btn">Add Task</button>
+                </div>
+                <section class="task-table">
+                    <div class="task-table-row">
+                        <div
+                            class="task-table-data task-table-head task-table-number">
+                            #
+                        </div>
+                        <div
+                            class="task-table-data task-table-head task-table-name">
+                            Name
+                        </div>
+                        <div
+                            class="task-table-data task-table-head task-table-status">
+                            Status
+                        </div>
+                        <div
+                            class="task-table-data task-table-head task-table-action">
+                            Action
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <!-- main end -->
         </div>
         <script src="./scripts/script.js"></script>
     </body>
