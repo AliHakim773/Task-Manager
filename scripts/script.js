@@ -66,53 +66,7 @@ function refreshTable() {
     addEmptyPlaceholder()
     if (temp_tasks.length != 0) {
         temp_tasks.forEach(function (e) {
-            task_table.innerHTML += `<div class="task-table-row" data-row-id="${
-                e.id
-            }">
-                        <div
-                        class="task-table-data task-table-priority text-center">
-                        <p class="priority priority-${
-                            PRIORITY_MAP[e.priority]
-                        }">${PRIORITY_MAP[e.priority]}</p>
-                            </div>
-                        <div
-                        class="task-table-data task-table-name">
-                            <input
-                                data-name-id=${e.id}
-                                type="text"
-                                class="task-table-name-input"
-                                value="${e.value}" />
-                            </div>
-                            <div
-                                class="task-table-data task-table-date text-center">
-                                ${e.date}
-                            </div>
-                            <div
-                                class="task-table-data task-table-status text-center">
-                                <button 
-                                    data-button="status" 
-                                    data-status-id="${e.id}" 
-                                    class="btn ${
-                                        e.status == "active"
-                                            ? "btn-danger"
-                                            : "btn-confirm"
-                                    } ">
-                                    ${
-                                        e.status == "active"
-                                            ? "Active"
-                                            : "Completed"
-                                    }
-                                </button>
-                            </div>
-                            <div
-                                class="task-table-data task-table-action text-center">
-                                <button 
-                                    data-delete-id="${e.id}" 
-                                    data-button="delete" 
-                                    class="btn btn-danger-outline">
-                                    Delete
-                                </button>
-                            </div>`
+            appendTable(e)
         })
     }
     addListnersToDeleteButtons()
@@ -201,3 +155,51 @@ selectStatus.addEventListener("change", function (e) {
     console.log(selectStatus.value)
     refreshTable()
 })
+
+function appendTable(e) {
+    task_table.innerHTML += `<div class="task-table-row" data-row-id="${e.id}">
+                        <div
+                        class="task-table-data task-table-priority text-center">
+                        <p class="priority priority-${
+                            PRIORITY_MAP[e.priority]
+                        }">${PRIORITY_MAP[e.priority]}</p>
+                            </div>
+                        <div
+                        class="task-table-data task-table-name">
+                            <input
+                                data-name-id=${e.id}
+                                type="text"
+                                class="task-table-name-input"
+                                value="${e.value}" />
+                            </div>
+                            <div
+                                class="task-table-data task-table-date text-center">
+                                ${e.date}
+                            </div>
+                            <div
+                                class="task-table-data task-table-status text-center">
+                                <button 
+                                    data-button="status" 
+                                    data-status-id="${e.id}" 
+                                    class="btn ${
+                                        e.status == "active"
+                                            ? "btn-danger"
+                                            : "btn-confirm"
+                                    } ">
+                                    ${
+                                        e.status == "active"
+                                            ? "Active"
+                                            : "Completed"
+                                    }
+                                </button>
+                            </div>
+                            <div
+                                class="task-table-data task-table-action text-center">
+                                <button 
+                                    data-delete-id="${e.id}" 
+                                    data-button="delete" 
+                                    class="btn btn-danger-outline">
+                                    Delete
+                                </button>
+                            </div>`
+}
