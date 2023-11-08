@@ -4,17 +4,20 @@ const STATUS_MAP = ["all", "active", "completed"]
 const TASKS = []
 
 const add_button = document.getElementById("add-task-btn")
-const input_task = document.getElementsByClassName("task-input")[0]
+const input_task = document.getElementById("task-input")
+const input_task_date = document.getElementById("task-date-input")
 const input_label = document.getElementsByClassName("task-input-label")[0]
 const task_table = document.getElementsByClassName("task-table")[0]
 const task_table_head = document.getElementsByClassName("task-table-head")[0]
 
+input_task_date.valueAsDate = new Date()
 // click listner on the add a task button
 add_button.addEventListener("click", function () {
     if (input_task.value) {
         const new_task = {
             id: count,
             value: input_task.value,
+            date: dateFormat(input_task_date.valueAsDate),
             status: "active",
         }
         count++
@@ -26,6 +29,13 @@ add_button.addEventListener("click", function () {
         input_label.classList.remove("d-none")
     }
 })
+
+function dateFormat(d) {
+    const day = d.getDate()
+    const month = d.getMonth()
+    const year = d.getFullYear()
+    return `${day}-${month}-${year}`
+}
 
 function filterTasksByStatus() {
     const NEW_TASKS = []
@@ -55,7 +65,7 @@ function refreshTable() {
                 e.id
             }">
                         <div
-                        class="task-table-data task-table-number text-center">
+                        class="task-table-data task-table-priority text-center">
                             ${e.id}
                             </div>
                         <div
@@ -65,6 +75,10 @@ function refreshTable() {
                                 type="text"
                                 class="task-table-name-input"
                                 value="${e.value}" />
+                            </div>
+                            <div
+                                class="task-table-data task-table-date text-center">
+                                ${e.date}
                             </div>
                             <div
                                 class="task-table-data task-table-status text-center">

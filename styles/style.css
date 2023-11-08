@@ -91,12 +91,15 @@ main {
 .task-table-head > .task-table-data:not(:first-child) {
     border-left: 2px solid #fff;
 }
-.task-table-number {
-    flex-basis: 5%;
+.task-table-priority {
+    flex-basis: 10%;
 }
 .task-table-name {
-    flex-basis: 75%;
+    flex-basis: 55%;
     padding-left: 20px;
+}
+.task-table-date {
+    flex-basis: 20%;
 }
 .task-table-status {
     flex-basis: 10%;

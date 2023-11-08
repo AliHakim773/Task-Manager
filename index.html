@@ -24,9 +24,14 @@
                     >
                     <input
                         name="task-input"
-                        class="task-input action-primary"
+                        id="task-input"
+                        class="action-primary"
                         type="text"
                         placeholder="Enter Your Task" />
+                    <input
+                        id="task-date-input"
+                        class="action-primary"
+                        type="date" />
                     <button id="add-task-btn" class="btn btn-primary-outline">
                         Add Task
                     </button>
@@ -46,10 +51,14 @@
                 <section class="task-table">
                     <div class="task-table-row task-table-head">
                         <div
-                            class="task-table-data task-table-number text-center">
-                            #
+                            class="task-table-data task-table-priority text-center">
+                            Priority
                         </div>
                         <div class="task-table-data task-table-name">Name</div>
+                        <div
+                            class="task-table-data task-table-date text-center">
+                            Due Date
+                        </div>
                         <div
                             class="task-table-data task-table-status text-center">
                             Status
@@ -59,6 +68,38 @@
                             Action
                         </div>
                     </div>
+                    <!-- test start -->
+                    <div class="task-table-row">
+                        <div
+                            class="task-table-data task-table-priority text-center">
+                            1
+                        </div>
+                        <div class="task-table-data task-table-name">
+                            <input
+                                type="text"
+                                class="task-table-name-input"
+                                value="NAME" />
+                        </div>
+                        <div
+                            class="task-table-data task-table-date text-center">
+                            Due Date
+                        </div>
+                        <div
+                            class="task-table-data task-table-status text-center">
+                            <button data-button="status" class="btn btn-danger">
+                                Active
+                            </button>
+                        </div>
+                        <div
+                            class="task-table-data task-table-action text-center">
+                            <button
+                                data-button="delete"
+                                class="btn btn-danger-outline">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <!-- test end -->
                     <div class="task-table-row task-empty">
                         You have no Tasks
                     </div>
