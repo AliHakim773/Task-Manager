@@ -29,13 +29,9 @@ main {
 .task-actions {
     width: 100%;
     padding-inline: 2rem;
+    display: flex;
+    gap: 10px;
     position: relative;
-}
-.task-input {
-    height: 30px;
-    padding-inline: 5px;
-    border-radius: 3px;
-    border: 1px solid var(--primary-color);
 }
 .task-input-label {
     position: absolute;
@@ -46,6 +42,15 @@ main {
     transform: translateY(-100%);
     animation-name: horizontal-shaking;
     animation-duration: 0.5s;
+}
+.task-status-select {
+    margin-left: auto;
+}
+.task-status-select select {
+    cursor: pointer;
+}
+.task-status-select select:focus {
+    outline: none;
 }
 .task-table {
     margin-block: 2rem;

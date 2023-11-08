@@ -72,6 +72,12 @@ img {
 input:focus {
     outline: none;
 }
+.action-primary {
+    height: 30px;
+    padding-inline: 5px;
+    border-radius: 3px;
+    border: 1px solid var(--primary-color);
+}
 
 @keyframes horizontal-shaking {
     0% {
