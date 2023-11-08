@@ -1,22 +1,27 @@
 let count = 1
 let task_status = 0
 const STATUS_MAP = ["all", "active", "completed"]
+const PRIORITY_MAP = ["low", "medium", "high"]
 const TASKS = []
 
 const add_button = document.getElementById("add-task-btn")
 const input_task = document.getElementById("task-input")
 const input_task_date = document.getElementById("task-date-input")
+const input_task_priority = document.getElementById("task-priority-select")
 const input_label = document.getElementsByClassName("task-input-label")[0]
 const task_table = document.getElementsByClassName("task-table")[0]
 const task_table_head = document.getElementsByClassName("task-table-head")[0]
 
+// to set today as a defualt value for date selector
 input_task_date.valueAsDate = new Date()
+
 // click listner on the add a task button
 add_button.addEventListener("click", function () {
     if (input_task.value) {
         const new_task = {
             id: count,
             value: input_task.value,
+            priority: input_task_priority.value,
             date: dateFormat(input_task_date.valueAsDate),
             status: "active",
         }
@@ -66,7 +71,9 @@ function refreshTable() {
             }">
                         <div
                         class="task-table-data task-table-priority text-center">
-                            ${e.id}
+                        <p class="priority priority-${
+                            PRIORITY_MAP[e.priority]
+                        }">${PRIORITY_MAP[e.priority]}</p>
                             </div>
                         <div
                         class="task-table-data task-table-name">

@@ -46,10 +46,10 @@ main {
 .task-status-select {
     margin-left: auto;
 }
-.task-status-select select {
+select {
     cursor: pointer;
 }
-.task-status-select select:focus {
+select:focus {
     outline: none;
 }
 .task-table {
@@ -95,17 +95,17 @@ main {
     flex-basis: 10%;
 }
 .task-table-name {
-    flex-basis: 55%;
+    flex-basis: 45%;
     padding-left: 20px;
 }
 .task-table-date {
     flex-basis: 20%;
 }
 .task-table-status {
-    flex-basis: 10%;
+    flex-basis: 15%;
 }
 .task-table-action {
-    flex-basis: 10%;
+    flex-basis: 15%;
 }
 .task-table-name-input {
     width: 100%;
@@ -119,5 +119,23 @@ main {
     font-size: 20px;
     font-style: italic;
     color: #333;
+}
+
+.priority {
+    font-size: 14px;
+    font-style: italic;
+    color: #fff;
+    border-radius: 5px;
+    width: 60px;
+    margin-inline: auto;
+}
+.priority-low {
+    background-image: linear-gradient(90deg, #36d1dc 0%, #5b86e5 100%);
+}
+.priority-medium {
+    background-image: linear-gradient(90deg, #22c1c3 0%, #fdbb2d 100%);
+}
+.priority-high {
+    background-image: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
 }
 /* main end */

@@ -32,6 +32,14 @@
                         id="task-date-input"
                         class="action-primary"
                         type="date" />
+                    <select
+                        class="action-primary"
+                        name="task-priority-select"
+                        id="task-priority-select">
+                        <option id="priority-low" value="0">Low</option>
+                        <option id="priority-medium" value="1">Medium</option>
+                        <option id="priority-high" value="2">High</option>
+                    </select>
                     <button id="add-task-btn" class="btn btn-primary-outline">
                         Add Task
                     </button>
@@ -72,7 +80,7 @@
                     <div class="task-table-row">
                         <div
                             class="task-table-data task-table-priority text-center">
-                            1
+                            <p class="priority priority-low">low</p>
                         </div>
                         <div class="task-table-data task-table-name">
                             <input
