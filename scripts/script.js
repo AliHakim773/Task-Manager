@@ -1,5 +1,6 @@
 let count = 1
 let task_status = 0
+let table_sorting = 0
 const STATUS_MAP = ["all", "active", "completed"]
 const PRIORITY_MAP = ["low", "medium", "high"]
 const TASKS = []
@@ -8,13 +9,13 @@ const add_button = document.getElementById("add-task-btn")
 const input_task = document.getElementById("task-input")
 const input_task_date = document.getElementById("task-date-input")
 const input_task_priority = document.getElementById("task-priority-select")
+const task_table_sorting = document.getElementById("task-sorting")
 const input_label = document.getElementsByClassName("task-input-label")[0]
 const task_table = document.getElementsByClassName("task-table")[0]
 const task_table_head = document.getElementsByClassName("task-table-head")[0]
 
 // to set today as a defualt value for date selector
 input_task_date.valueAsDate = new Date()
-
 // click listner on the add a task button
 add_button.addEventListener("click", function () {
     if (input_task.value) {
@@ -37,9 +38,13 @@ add_button.addEventListener("click", function () {
 
 function dateFormat(d) {
     const day = d.getDate()
-    const month = d.getMonth()
+    const month = d.getMonth() + 1
     const year = d.getFullYear()
     return `${day}-${month}-${year}`
+}
+function compareDate(d1, d2) {
+    if (d1 > d2) return 1
+    else return -1
 }
 
 function filterTasksByStatus() {
@@ -62,6 +67,19 @@ function refreshTable() {
         temp_tasks = filterTasksByStatus()
     }
 
+    if (table_sorting == "pa") {
+        temp_tasks.sort((a, b) => a.priority - b.priority)
+    } else if (table_sorting == "pd") {
+        temp_tasks.sort((a, b) => b.priority - a.priority)
+    } else if (table_sorting == "da") {
+        temp_tasks.sort((a, b) =>
+            compareDate(Date.parse(a.date), Date.parse(b.date))
+        )
+    } else if (table_sorting == "dd") {
+        temp_tasks.sort((a, b) =>
+            compareDate(Date.parse(b.date), Date.parse(a.date))
+        )
+    }
     task_table.innerHTML = `<div class="task-table-row task-table-head"> ${task_table_head.innerHTML} </div>`
     addEmptyPlaceholder()
     if (temp_tasks.length != 0) {
@@ -150,7 +168,7 @@ function addEventListnerToChangeNames() {
 }
 
 const selectStatus = document.getElementById("task-status-select")
-selectStatus.addEventListener("change", function (e) {
+selectStatus.addEventListener("change", function () {
     task_status = selectStatus.value
     console.log(selectStatus.value)
     refreshTable()
@@ -203,3 +221,8 @@ function appendTable(e) {
                                 </button>
                             </div>`
 }
+
+task_table_sorting.addEventListener("change", function () {
+    table_sorting = task_table_sorting.value
+    refreshTable()
+})
