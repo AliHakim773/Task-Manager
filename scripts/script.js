@@ -1,4 +1,6 @@
 let count = 1
+let task_status = 0
+const STATUS_MAP = ["all", "active", "completed"]
 const TASKS = []
 
 const add_button = document.getElementById("add-task-btn")
@@ -10,7 +12,7 @@ const task_table_head = document.getElementsByClassName("task-table-head")[0]
 // click listner on the add a task button
 add_button.addEventListener("click", function () {
     if (input_task.value) {
-        new_task = {
+        const new_task = {
             id: count,
             value: input_task.value,
             status: "active",
@@ -25,42 +27,73 @@ add_button.addEventListener("click", function () {
     }
 })
 
+function filterTasksByStatus() {
+    const NEW_TASKS = []
+    TASKS.forEach(function (t) {
+        if (t.status == STATUS_MAP[task_status]) {
+            NEW_TASKS.push(t)
+        }
+    })
+    return NEW_TASKS
+}
+
 // function to refresh the table so it is up-to-date with TASKS array
 function refreshTable() {
+    let temp_tasks
+
+    if (task_status == 0) {
+        temp_tasks = TASKS
+    } else {
+        temp_tasks = filterTasksByStatus()
+    }
+
     task_table.innerHTML = `<div class="task-table-row task-table-head"> ${task_table_head.innerHTML} </div>`
-    TASKS.forEach(function (e) {
-        task_table.innerHTML += `<div class="task-table-row" data-row-id="${e.id}">
+    addEmptyPlaceholder()
+    if (temp_tasks.length != 0) {
+        temp_tasks.forEach(function (e) {
+            task_table.innerHTML += `<div class="task-table-row" data-row-id="${
+                e.id
+            }">
                         <div
-                            class="task-table-data task-table-number text-center">
+                        class="task-table-data task-table-number text-center">
                             ${e.id}
                             </div>
                         <div
-                            class="task-table-data task-table-name">
+                        class="task-table-data task-table-name">
                             <input
-                            data-name-id=${e.id}
-                            type="text"
-                            class="task-table-name-input"
-                            value="${e.value}" />
+                                data-name-id=${e.id}
+                                type="text"
+                                class="task-table-name-input"
+                                value="${e.value}" />
                             </div>
                             <div
-                            class="task-table-data task-table-status text-center">
-                            <button 
-                            data-button="status" 
-                            data-status-id="${e.id}" 
-                            class="btn btn-danger">
-                            Active
+                                class="task-table-data task-table-status text-center">
+                                <button 
+                                    data-button="status" 
+                                    data-status-id="${e.id}" 
+                                    class="btn ${
+                                        e.status == "active"
+                                            ? "btn-danger"
+                                            : "btn-confirm"
+                                    } ">
+                                    ${
+                                        e.status == "active"
+                                            ? "Active"
+                                            : "Completed"
+                                    }
                                 </button>
-                        </div>
-                        <div
-                            class="task-table-data task-table-action text-center">
-                            <button 
-                            data-delete-id="${e.id}" 
-                            data-button="delete" 
-                            class="btn btn-danger-outline">
-                            Delete
-                            </button>
-                        </div>`
-    })
+                            </div>
+                            <div
+                                class="task-table-data task-table-action text-center">
+                                <button 
+                                    data-delete-id="${e.id}" 
+                                    data-button="delete" 
+                                    class="btn btn-danger-outline">
+                                    Delete
+                                </button>
+                            </div>`
+        })
+    }
     addListnersToDeleteButtons()
     addListnersToStatusButtons()
     addEventListnerToChangeNames()
@@ -73,28 +106,31 @@ function findObjectIndexWithId(arr, id) {
     })
 }
 
-// removes thhe object with a specific id
 function removeObjectWithId(arr, id) {
     const objWithIdIndex = findObjectIndexWithId(arr, id)
     arr.splice(objWithIdIndex, 1)
     return arr
 }
 
-// adds event listners to buttons after created
-function addListnersToDeleteButtons() {
-    let buttons = document.querySelectorAll('[data-button="delete"]')
-    buttons.forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-            let id = e.target.getAttribute("data-delete-id")
-            let table_row = document.querySelector(`[data-row-id="${id}"]`)
-            removeObjectWithId(TASKS, id)
-            table_row.remove()
-            if (TASKS.length == 0) {
-                task_table.innerHTML += `
+function addEmptyPlaceholder() {
+    if (TASKS.length == 0) {
+        task_table.innerHTML += `
                     <div class="task-table-row task-empty">
                         You have no Tasks
                     </div>`
-            }
+    }
+}
+
+// adds event listners to buttons after created
+function addListnersToDeleteButtons() {
+    const buttons = document.querySelectorAll('[data-button="delete"]')
+    buttons.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            const id = e.target.getAttribute("data-delete-id")
+            const table_row = document.querySelector(`[data-row-id="${id}"]`)
+            removeObjectWithId(TASKS, id)
+            table_row.remove()
+            addEmptyPlaceholder()
         })
     })
 }
@@ -107,11 +143,11 @@ function addAndRemove(element, add, remove) {
 
 // adds event listners to all the status buttons
 function addListnersToStatusButtons() {
-    let buttons = document.querySelectorAll('[data-button="status"]')
+    const buttons = document.querySelectorAll('[data-button="status"]')
     buttons.forEach(function (btn) {
         btn.addEventListener("click", function (e) {
-            let id = e.target.getAttribute("data-status-id")
-            let current_obj_index = findObjectIndexWithId(TASKS, id)
+            const id = e.target.getAttribute("data-status-id")
+            const current_obj_index = findObjectIndexWithId(TASKS, id)
             if (e.target.classList.contains("btn-danger")) {
                 addAndRemove(e.target.classList, "btn-confirm", "btn-danger")
                 e.target.innerHTML = "Completed"
@@ -128,13 +164,19 @@ function addListnersToStatusButtons() {
 // adds event listners to all the name inputs
 function addEventListnerToChangeNames() {
     let names = document.querySelectorAll(".task-table-name-input")
-    console.log(names)
     names.forEach(function (n) {
         n.addEventListener("change", function (e) {
-            let id = e.target.getAttribute("data-name-id")
+            const id = e.target.getAttribute("data-name-id")
             console.log(id)
-            let current_obj_index = findObjectIndexWithId(TASKS, id)
+            const current_obj_index = findObjectIndexWithId(TASKS, id)
             TASKS[current_obj_index].value = e.target.value
         })
     })
 }
+
+const selectStatus = document.getElementById("task-status-select")
+selectStatus.addEventListener("change", function (e) {
+    task_status = selectStatus.value
+    console.log(selectStatus.value)
+    refreshTable()
+})
