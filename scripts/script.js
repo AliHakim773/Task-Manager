@@ -11,8 +11,7 @@ const input_task_date = document.getElementById("task-date-input")
 const input_task_priority = document.getElementById("task-priority-select")
 const task_table_sorting = document.getElementById("task-sorting")
 const input_label = document.getElementsByClassName("task-input-label")[0]
-const task_table = document.getElementsByClassName("task-table")[0]
-const task_table_head = document.getElementsByClassName("task-table-head")[0]
+const task_table = document.getElementsByClassName("drag-sort-enable")[0]
 
 // to set today as a defualt value for date selector
 input_task_date.valueAsDate = new Date()
@@ -80,7 +79,7 @@ function refreshTable() {
             compareDate(Date.parse(b.date), Date.parse(a.date))
         )
     }
-    task_table.innerHTML = `<div class="task-table-row task-table-head"> ${task_table_head.innerHTML} </div>`
+    task_table.innerHTML = ``
     addEmptyPlaceholder()
     if (temp_tasks.length != 0) {
         temp_tasks.forEach(function (e) {
@@ -90,6 +89,7 @@ function refreshTable() {
     addListnersToDeleteButtons()
     addListnersToStatusButtons()
     addEventListnerToChangeNames()
+    enableDragSort("drag-sort-enable")
 }
 
 // finds an object with an id
@@ -226,3 +226,49 @@ task_table_sorting.addEventListener("change", function () {
     table_sorting = task_table_sorting.value
     refreshTable()
 })
+
+function enableDragSort(listClass) {
+    const sortableLists = document.getElementsByClassName(listClass)
+    console.log(sortableLists)
+    Array.prototype.map.call(sortableLists, (list) => {
+        enableDragList(list)
+    })
+}
+
+function enableDragList(list) {
+    console.log(list.children)
+    Array.prototype.map.call(list.children, (item) => {
+        enableDragItem(item)
+    })
+}
+
+function enableDragItem(item) {
+    item.setAttribute("draggable", true)
+    item.ondrag = handleDrag
+    item.ondragend = handleDrop
+}
+
+function handleDrag(item) {
+    const selectedItem = item.target,
+        list = selectedItem.parentNode,
+        x = event.clientX,
+        y = event.clientY
+
+    selectedItem.classList.add("drag-sort-active")
+    let swapItem =
+        document.elementFromPoint(x, y) === null
+            ? selectedItem
+            : document.elementFromPoint(x, y)
+
+    if (list === swapItem.parentNode) {
+        swapItem =
+            swapItem !== selectedItem.nextSibling
+                ? swapItem
+                : swapItem.nextSibling
+        list.insertBefore(selectedItem, swapItem)
+    }
+}
+
+function handleDrop(item) {
+    item.target.classList.remove("drag-sort-active")
+}
