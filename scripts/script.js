@@ -17,7 +17,7 @@ const task_table = document.getElementsByClassName("drag-sort-enable")[0]
 input_task_date.valueAsDate = new Date()
 // click listner on the add a task button
 add_button.addEventListener("click", function () {
-    if (input_task.value) {
+    if (input_task.value && validDate(input_task_date.valueAsDate)) {
         const new_task = {
             id: count,
             value: input_task.value,
@@ -44,6 +44,9 @@ function dateFormat(d) {
 function compareDate(d1, d2) {
     if (d1 > d2) return 1
     else return -1
+}
+function validDate(d1) {
+    return d1 >= new Date()
 }
 
 function filterTasksByStatus() {
@@ -229,14 +232,12 @@ task_table_sorting.addEventListener("change", function () {
 
 function enableDragSort(listClass) {
     const sortableLists = document.getElementsByClassName(listClass)
-    console.log(sortableLists)
     Array.prototype.map.call(sortableLists, (list) => {
         enableDragList(list)
     })
 }
 
 function enableDragList(list) {
-    console.log(list.children)
     Array.prototype.map.call(list.children, (item) => {
         enableDragItem(item)
     })
