@@ -46,7 +46,10 @@ function compareDate(d1, d2) {
     else return -1
 }
 function validDate(d1) {
-    return d1 >= new Date()
+    var d = new Date()
+    d.setDate(d.getDate() - 1)
+
+    return d1 >= d
 }
 
 function filterTasksByStatus() {
