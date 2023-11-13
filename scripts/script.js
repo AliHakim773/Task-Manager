@@ -15,6 +15,7 @@ const task_table = document.getElementsByClassName("drag-sort-enable")[0]
 
 // to set today as a defualt value for date selector
 input_task_date.valueAsDate = new Date()
+// click listner on the add a task button
 add_button.addEventListener("click", function () {
     if (input_task.value && validDate(input_task_date.valueAsDate)) {
         const new_task = {
@@ -40,12 +41,10 @@ function dateFormat(d) {
     const year = d.getFullYear()
     return `${day}-${month}-${year}`
 }
-
 function compareDate(d1, d2) {
     if (d1 > d2) return 1
     else return -1
 }
-
 function validDate(d1) {
     var d = new Date()
     d.setDate(d.getDate() - 1)
@@ -63,6 +62,7 @@ function filterTasksByStatus() {
     return NEW_TASKS
 }
 
+// function to refresh the table so it is up-to-date with TASKS array
 function refreshTable() {
     let temp_tasks
 
@@ -98,6 +98,7 @@ function refreshTable() {
     enableDragSort("drag-sort-enable")
 }
 
+// finds an object with an id
 function findObjectIndexWithId(arr, id) {
     return arr.findIndex(function (obj) {
         return obj.id == id
@@ -119,6 +120,7 @@ function addEmptyPlaceholder() {
     }
 }
 
+// adds event listners to buttons after created
 function addListnersToDeleteButtons() {
     const buttons = document.querySelectorAll('[data-button="delete"]')
     buttons.forEach(function (btn) {
@@ -132,11 +134,13 @@ function addListnersToDeleteButtons() {
     })
 }
 
+// remove and add elements from array
 function addAndRemove(element, add, remove) {
     element.remove(remove)
     element.add(add)
 }
 
+// adds event listners to all the status buttons
 function addListnersToStatusButtons() {
     const buttons = document.querySelectorAll('[data-button="status"]')
     buttons.forEach(function (btn) {
@@ -156,6 +160,7 @@ function addListnersToStatusButtons() {
     })
 }
 
+// adds event listners to all the name inputs
 function addEventListnerToChangeNames() {
     let names = document.querySelectorAll(".task-table-name-input")
     names.forEach(function (n) {
@@ -252,6 +257,7 @@ function handleDrag(item) {
         list = selectedItem.parentNode,
         x = event.clientX,
         y = event.clientY
+
     selectedItem.classList.add("drag-sort-active")
     let swapItem =
         document.elementFromPoint(x, y) === null
