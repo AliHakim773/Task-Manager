@@ -10,8 +10,8 @@ const input_task = document.getElementById("task-input")
 const input_task_date = document.getElementById("task-date-input")
 const input_task_priority = document.getElementById("task-priority-select")
 const task_table_sorting = document.getElementById("task-sorting")
-const input_label = document.getElementsByClassName("task-input-label")[0]
-const task_table = document.getElementsByClassName("drag-sort-enable")[0]
+const input_label = document.getElementById("task-input-label")
+const task_table = document.getElementById("drag-sort-enable")
 const selectStatus = document.getElementById("task-status-select")
 
 // to set today as a defualt value for date selector
@@ -26,11 +26,7 @@ add_button.addEventListener("click", function () {
             date: dateFormat(input_task_date.valueAsDate),
             status: "active",
         }
-        count++
-        TASKS.push(new_task)
-        input_task.value = ""
-        input_label.classList.add("d-none")
-        refreshTable()
+        handleAddButton(new_task)
     } else {
         input_label.classList.remove("d-none")
     }
@@ -56,20 +52,8 @@ function refreshTable() {
     } else {
         temp_tasks = filterTasksByStatus()
     }
+    sortTasks(temp_tasks)
 
-    if (table_sorting == "pa") {
-        temp_tasks.sort((a, b) => a.priority - b.priority)
-    } else if (table_sorting == "pd") {
-        temp_tasks.sort((a, b) => b.priority - a.priority)
-    } else if (table_sorting == "da") {
-        temp_tasks.sort((a, b) =>
-            compareDate(Date.parse(a.date), Date.parse(b.date))
-        )
-    } else if (table_sorting == "dd") {
-        temp_tasks.sort((a, b) =>
-            compareDate(Date.parse(b.date), Date.parse(a.date))
-        )
-    }
     task_table.innerHTML = ``
     addEmptyPlaceholder()
     if (temp_tasks.length != 0) {
@@ -83,6 +67,42 @@ function refreshTable() {
     enableDragSort("drag-sort-enable")
 }
 
+function handleAddButton(task) {
+    count++
+    TASKS.push(task)
+    input_task.value = ""
+    input_label.classList.add("d-none")
+    refreshTable()
+}
+
+function sortTasks(arr) {
+    if (table_sorting == "pa") {
+        arr.sort((a, b) => a.priority - b.priority)
+    } else if (table_sorting == "pd") {
+        arr.sort((a, b) => b.priority - a.priority)
+    } else if (table_sorting == "da") {
+        console.log("Ascending")
+        arr.sort((a, b) => {
+            let tempDate = a.date.split("-")
+            let tempDate2 = b.date.split("-")
+            return compareDate(
+                new Date(tempDate[2], tempDate[1], tempDate[0]),
+                new Date(tempDate2[2], tempDate2[1], tempDate2[0])
+            )
+        })
+    } else if (table_sorting == "dd") {
+        console.log("Descending")
+        arr.sort((a, b) => {
+            let tempDate = b.date.split("-")
+            let tempDate2 = a.date.split("-")
+            return compareDate(
+                new Date(tempDate[2], tempDate[1], tempDate[0]),
+                new Date(tempDate2[2], tempDate2[1], tempDate2[0])
+            )
+        })
+    }
+}
+
 function dateFormat(d) {
     const day = d.getDate()
     const month = d.getMonth() + 1
@@ -90,6 +110,8 @@ function dateFormat(d) {
     return `${day}-${month}-${year}`
 }
 function compareDate(d1, d2) {
+    console.log(d1)
+    console.log(d1 > d2)
     if (d1 > d2) return 1
     else return -1
 }
