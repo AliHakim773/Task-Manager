@@ -12,6 +12,7 @@ const input_task_priority = document.getElementById("task-priority-select")
 const task_table_sorting = document.getElementById("task-sorting")
 const input_label = document.getElementsByClassName("task-input-label")[0]
 const task_table = document.getElementsByClassName("drag-sort-enable")[0]
+const selectStatus = document.getElementById("task-status-select")
 
 // to set today as a defualt value for date selector
 input_task_date.valueAsDate = new Date()
@@ -35,32 +36,16 @@ add_button.addEventListener("click", function () {
     }
 })
 
-function dateFormat(d) {
-    const day = d.getDate()
-    const month = d.getMonth() + 1
-    const year = d.getFullYear()
-    return `${day}-${month}-${year}`
-}
-function compareDate(d1, d2) {
-    if (d1 > d2) return 1
-    else return -1
-}
-function validDate(d1) {
-    var d = new Date()
-    d.setDate(d.getDate() - 1)
+task_table_sorting.addEventListener("change", function () {
+    table_sorting = task_table_sorting.value
+    refreshTable()
+})
 
-    return d1 >= d
-}
-
-function filterTasksByStatus() {
-    const NEW_TASKS = []
-    TASKS.forEach(function (t) {
-        if (t.status == STATUS_MAP[task_status]) {
-            NEW_TASKS.push(t)
-        }
-    })
-    return NEW_TASKS
-}
+selectStatus.addEventListener("change", function () {
+    task_status = selectStatus.value
+    console.log(selectStatus.value)
+    refreshTable()
+})
 
 // function to refresh the table so it is up-to-date with TASKS array
 function refreshTable() {
@@ -96,6 +81,33 @@ function refreshTable() {
     addListnersToStatusButtons()
     addEventListnerToChangeNames()
     enableDragSort("drag-sort-enable")
+}
+
+function dateFormat(d) {
+    const day = d.getDate()
+    const month = d.getMonth() + 1
+    const year = d.getFullYear()
+    return `${day}-${month}-${year}`
+}
+function compareDate(d1, d2) {
+    if (d1 > d2) return 1
+    else return -1
+}
+function validDate(d1) {
+    var d = new Date()
+    d.setDate(d.getDate() - 1)
+
+    return d1 >= d
+}
+
+function filterTasksByStatus() {
+    const NEW_TASKS = []
+    TASKS.forEach(function (t) {
+        if (t.status == STATUS_MAP[task_status]) {
+            NEW_TASKS.push(t)
+        }
+    })
+    return NEW_TASKS
 }
 
 // finds an object with an id
@@ -173,13 +185,6 @@ function addEventListnerToChangeNames() {
     })
 }
 
-const selectStatus = document.getElementById("task-status-select")
-selectStatus.addEventListener("change", function () {
-    task_status = selectStatus.value
-    console.log(selectStatus.value)
-    refreshTable()
-})
-
 function appendTable(e) {
     task_table.innerHTML += `<div class="task-table-row" data-row-id="${e.id}">
                         <div
@@ -227,11 +232,6 @@ function appendTable(e) {
                                 </button>
                             </div>`
 }
-
-task_table_sorting.addEventListener("change", function () {
-    table_sorting = task_table_sorting.value
-    refreshTable()
-})
 
 function enableDragSort(listClass) {
     const sortableLists = document.getElementsByClassName(listClass)
