@@ -81,26 +81,33 @@ function sortTasks(arr) {
     } else if (table_sorting == "pd") {
         arr.sort((a, b) => b.priority - a.priority)
     } else if (table_sorting == "da") {
-        console.log("Ascending")
-        arr.sort((a, b) => {
-            let tempDate = a.date.split("-")
-            let tempDate2 = b.date.split("-")
-            return compareDate(
-                new Date(tempDate[2], tempDate[1], tempDate[0]),
-                new Date(tempDate2[2], tempDate2[1], tempDate2[0])
-            )
-        })
+        arr = tasksDateSort(arr)
     } else if (table_sorting == "dd") {
-        console.log("Descending")
-        arr.sort((a, b) => {
-            let tempDate = b.date.split("-")
-            let tempDate2 = a.date.split("-")
-            return compareDate(
-                new Date(tempDate[2], tempDate[1], tempDate[0]),
-                new Date(tempDate2[2], tempDate2[1], tempDate2[0])
-            )
-        })
+        arr = tasksDateSort(arr, false)
     }
+}
+
+function tasksDateSort(arr, isAscending = true) {
+    arr.sort((a, b) => {
+        let tempDate, tempDate2
+        if (isAscending) {
+            tempDate = a.date.split("-")
+            tempDate2 = b.date.split("-")
+        } else {
+            tempDate = b.date.split("-")
+            tempDate2 = a.date.split("-")
+        }
+        return compareDate(
+            new Date(tempDate[2], tempDate[1], tempDate[0]),
+            new Date(tempDate2[2], tempDate2[1], tempDate2[0])
+        )
+    })
+    return arr
+}
+
+function compareDate(d1, d2) {
+    if (d1 > d2) return 1
+    else return -1
 }
 
 function dateFormat(d) {
@@ -109,16 +116,10 @@ function dateFormat(d) {
     const year = d.getFullYear()
     return `${day}-${month}-${year}`
 }
-function compareDate(d1, d2) {
-    console.log(d1)
-    console.log(d1 > d2)
-    if (d1 > d2) return 1
-    else return -1
-}
+
 function validDate(d1) {
     var d = new Date()
     d.setDate(d.getDate() - 1)
-
     return d1 >= d
 }
 
